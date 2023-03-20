@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  title: Cryptocurrency Analytics API
+  version: 1.0.0
+paths:
+  /vendors:
+    get:
+      summary: Retrieve all available vendors
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vendor'
+  /cryptocurrencies:
+    get:
+      summary: Retrieve all available cryptocurrencies
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cryptocurrency'
+  /vendors/{vendorId}/cryptocurrencies/{symbol}/prices:
+    get:
+      summary: Retrieve minimum, maximum, and median prices for a cryptocurrency symbol by vendor ID and time period
+      parameters:
+        - name: vendorId
+          in: path
+          description: ID of the vendor to retrieve prices from
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: symbol
+          in: path
+          description: Symbol of the cryptocurrency to retrieve prices for
+          required: true
+          schema:
+            type: string
+            maxLength: 10
+        - name: fromDateTime
+          in: query
+          description: Start of the time period to retrieve prices for (inclusive)
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: toDateTime
+          in: query
+          description: End of the time period to retrieve prices for (inclusive)
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  minimum_price:
+                    type: number
+                    description: Minimum price of the cryptocurrency symbol during the specified time period
+                  maximum_price:
+                    type: number
+                    description: Maximum price of the cryptocurrency symbol during the specified time period
+                  median_price:
+                    type: number
+                    description: Median price of the cryptocurrency symbol during the specified time period
+components:
+  schemas:
+    Vendor:
+      type: object
+      properties:
+        vendor_id:
+          type: integer
+          format: int64
+          description: Unique identifier for the vendor
+        vendor_name:
+          type: string
+          description: Name of the vendor
+    Cryptocurrency:
+      type: object
+      properties:
+        cryptocurrency_symbol:
+          type: string
+          maxLength: 10
+          description: Symbol of the cryptocurrency
+
