@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: Cryptocurrency Record Model Definition
+components:
+  schemas:
+    CryptocurrencyRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the cryptocurrency record
+        observed_at:
+          type: string
+          format: date-time
+          description: Date and time the record was observed
+        symbol:
+          type: string
+          maxLength: 10
+          description: Symbol of the cryptocurrency
+        vendor:
+          type: integer
+          format: int64
+          description: ID of the vendor providing the data
+        max_supply:
+          type: integer
+          format: int64
+          description: Maximum supply of the cryptocurrency
+        circulating_supply:
+          type: integer
+          format: int64
+          description: Circulating supply of the cryptocurrency
+        total_supply:
+          type: integer
+          format: int64
+          description: Total supply of the cryptocurrency
+        price_usd:
+          type: number
+          description: Price of the cryptocurrency in USD
+        volume_24h:
+          type: number
+          description: 24-hour trading volume of the cryptocurrency
+        market_cap:
+          type: number
+          description: Market capitalization of the cryptocurrency
+
